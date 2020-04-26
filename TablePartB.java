@@ -20,12 +20,15 @@ import org.apache.hadoop.hbase.util.Bytes;
 public class TablePartB{
 
    public static void main(String[] args) throws IOException {
-
-   	HTableDescriptor[] tableDescriptor = ???;
+	Configuration config = HBaseConfiguration.create();
+	HBaseAdmin admin = new HBaseAdmin(config);
+	
+	   
+   	HTableDescriptor[] tableDescriptor = admin.listTables();
 	//TODO    
-	for(???){
+	for(int i = 0; i < tableDescriptor.length; i++){
          System.out.println(tableDescriptor[i].getNameAsString());
-     }
+     	}
    }
 }
 
