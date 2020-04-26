@@ -17,6 +17,10 @@ import org.apache.hadoop.hbase.client.Scan;
 
 import org.apache.hadoop.hbase.util.Bytes;
 
+
+import org.apache.hadoop.hbase.client.Get;
+
+
 public class TablePartF{
 
    public static void main(String[] args) throws IOException {
