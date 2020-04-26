@@ -35,8 +35,10 @@ public class TablePartE{
 	scan.addColumn(Bytes.toBytes("custom"), Bytes.toBytes("color"));	     
 	
 	ResultScanner scanner = table.getScanner(scan);
-	for (Result result = scanner.next(); result != null; result = scanner.next())
+	for (Result result = scanner.next(); result != null; result = scanner.next()) {
 		System.out.println(result);
+	}
+	scanner.close();
    }
 }
 
