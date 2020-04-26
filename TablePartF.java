@@ -38,7 +38,7 @@ public class TablePartF{
 	scan.addColumn(Bytes.toBytes("custom"), Bytes.toBytes("color"));	     
 	
 	ResultScanner scanner = table.getScanner(scan);
-	ResultScanner scanner2 = table.getScanner(scan);
+	ResultScanner scanner2 = table.getScanner(new Scan(scan));
 	for (Result result = scanner.next(); result != null; result = scanner.next()) {
 		byte [] vName1 = result.getValue(Bytes.toBytes("professional"), Bytes.toBytes("name"));
 		byte [] vPower1 = result.getValue(Bytes.toBytes("personal"), Bytes.toBytes("power"));
