@@ -34,10 +34,11 @@ public class TablePartC{
 	try {
 		BufferedReader br = new BufferedReader(new FileReader("input.csv"));
 		//loop through each line in csv and add values for each row
+		String line = "";
 		while ((line = br.readLine()) != null) {
 			String[] row = line.split(",");
 			//instantiate put class, add values into put instance
-			Put p = Put(Bytes.toBytes(row[0]));
+			Put p = new Put(Bytes.toBytes(row[0]));
 			//add values with add(column family name, qualifier/row name, value)
 			p.add(Bytes.toBytes("personal"), Bytes.toBytes("hero"), Bytes.toBytes(row[1]));
 			p.add(Bytes.toBytes("personal"), Bytes.toBytes("power"), Bytes.toBytes(row[2]));
