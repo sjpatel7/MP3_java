@@ -18,9 +18,6 @@ import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.util.Bytes;
 
 
-import org.apache.hadoop.hbase.client.Get;
-
-
 public class TablePartF{
 
    public static void main(String[] args) throws IOException {
@@ -33,6 +30,38 @@ public class TablePartF{
 
 	Configuration config = HBaseConfiguration.create();
 	HTable table = new HTable(config, "powers");
+	
+	//part E scan code
+	Scan scan = new Scan();
+	scan.addColumn(Bytes.toBytes("personal"), Bytes.toBytes("power"));
+	scan.addColumn(Bytes.toBytes("professional"), Bytes.toBytes("name"));
+	scan.addColumn(Bytes.toBytes("custom"), Bytes.toBytes("color"));	     
+	
+	ResultScanner scanner = table.getScanner(scan);
+	ResultScanner scanner2 = table.getScanner(scan);
+	for (Result result = scanner.next(); result != null; result = scanner.next()) {
+		byte [] vName1 = result.getValue(Bytes.toBytes("professional"), Bytes.toBytes("name"));
+		byte [] vPower1 = result.getValue(Bytes.toBytes("personal"), Bytes.toBytes("power"));
+		byte [] vColor = result.getValue(Bytes.toBytes("custom"), Bytes.toBytes("color"));
+		String name1 = Bytes.toString(vName1);
+		String power1 = Bytes.toString(vPower1);
+		String color = Bytes.toString(vColor);
+		for (Result r2 = scanner2.next(); r2 != null; r2 = scanner2.next()) {
+			byte [] vColor2 = r2.getValue(Bytes.toBytes("custom"), Bytes.toBytes("color"));
+			byte [] vName2 = r2.getValue(Bytes.toBytes("professional"), Bytes.toBytes("name"));
+			String color2 = Bytes.toString(vColor2);
+			String name2 = Bytes.toString(vName2);
+			if (color2.equals(color) && !name2.equals(name1)) {
+				byte [] vPower2 = r2.getValue(Bytes.toBytes("personal"), Bytes.toBytes("power"));
+				String power2 = Bytes.toString(vPower2);
+				System.out.println(name1 + ", " + power1 + ", " + name2 + ", " + power2 + ", "+color);
+			}
+		}
+		
+	}
+	scanner.close();
+	   
+	/*   
 	//cycle through each rowid lexicographically. match by color and diff name, then print
 	String[] rowIDs = new String[25];
 	for (int row = 1; row < 26; row++) {
@@ -62,7 +91,7 @@ public class TablePartF{
 			}
 		}
 	}
-	
+	*/
 	/*
 	String name = ???;
 	String power = ???;
