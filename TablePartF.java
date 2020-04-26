@@ -38,7 +38,6 @@ public class TablePartF{
 	scan.addColumn(Bytes.toBytes("custom"), Bytes.toBytes("color"));	     
 	
 	ResultScanner scanner = table.getScanner(scan);
-	ResultScanner scanner2 = table.getScanner(new Scan(scan));
 	for (Result result = scanner.next(); result != null; result = scanner.next()) {
 		byte [] vName1 = result.getValue(Bytes.toBytes("professional"), Bytes.toBytes("name"));
 		byte [] vPower1 = result.getValue(Bytes.toBytes("personal"), Bytes.toBytes("power"));
@@ -46,6 +45,8 @@ public class TablePartF{
 		String name1 = Bytes.toString(vName1);
 		String power1 = Bytes.toString(vPower1);
 		String color = Bytes.toString(vColor);
+		
+		ResultScanner scanner2 = table.getScanner(new Scan(scan));
 		for (Result r2 = scanner2.next(); r2 != null; r2 = scanner2.next()) {
 			byte [] vColor2 = r2.getValue(Bytes.toBytes("custom"), Bytes.toBytes("color"));
 			byte [] vName2 = r2.getValue(Bytes.toBytes("professional"), Bytes.toBytes("name"));
@@ -57,6 +58,7 @@ public class TablePartF{
 				System.out.println(name1 + ", " + power1 + ", " + name2 + ", " + power2 + ", "+color);
 			}
 		}
+		scanner2.close();
 		
 	}
 	scanner.close();
